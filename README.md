@@ -35,6 +35,10 @@ cd WeatherApp
 ### Step 2: Set up Docker and Airflow
 - Navigate to the docker/ folder.
 - The docker-compose.yaml file sets up Airflow and DuckDB with the necessary configurations.
+- Add your Fernet Key in docker-compose.yaml generated using
+  ```bash
+  python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+  ```
 - Run the following command to start the Airflow services:
   ```bash
   docker-compose up
