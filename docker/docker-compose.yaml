@@ -20,7 +20,7 @@ services:
       AIRFLOW__CORE__FERNET_KEY: 1NS-YRTKfELNOLdWfjmLTeyZvRRbMc-aXgPJDtFZnY4=
       AIRFLOW__CORE__DEFAULT_TIMEZONE: Europe/London
     ports:
-      - "8080:8080"
+      - "8081:8080"
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
