@@ -1,0 +1,51 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Use custom Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__FERNET_KEY: 1NS-YRTKfELNOLdWfjmLTeyZvRRbMc-aXgPJDtFZnY4=
+      AIRFLOW__CORE__DEFAULT_TIMEZONE: Europe/London
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./data:/opt/airflow/data  # Persist data directory
+      - ./backup:/opt/airflow/backup  # Persist backup directory
+    command: bash -c "airflow db init && airflow users create --username airflow --firstname Admin --lastname User --role Admin --email admin@example.com --password airflow && airflow webserver"
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Use custom Dockerfile
+    depends_on:
+      - webserver
+      - postgres
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__FERNET_KEY: 1NS-YRTKfELNOLdWfjmLTeyZvRRbMc-aXgPJDtFZnY4=
+      AIRFLOW__CORE__DEFAULT_TIMEZONE: Europe/London
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./data:/opt/airflow/data  # Persist data directory
+      - ./backup:/opt/airflow/backup  # Persist backup directory
+      - ./db:/opt/airflow/db  # This maps the db directory to your local machine
+      - ./parquets:/opt/airflow/parquets
+    command: bash -c "airflow scheduler"
+volumes:
+  postgres_data:
