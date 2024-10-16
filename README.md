@@ -30,7 +30,7 @@ This project demonstrates an end-to-end weather data pipeline, built using the O
 ### Step 1: Clone the Repository
 ```bash
 git clone https://github.com/vishweshhampali/WeatherApp
-cd weather-data-pipeline
+cd WeatherApp
 ```
 ### Step 2: Set up Docker and Airflow
 - Navigate to the docker/ folder.
