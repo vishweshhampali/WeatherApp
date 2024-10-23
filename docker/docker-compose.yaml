@@ -17,7 +17,7 @@ services:
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-      AIRFLOW__CORE__FERNET_KEY: <ADD_YOUR_FERNET_KEY>
+      AIRFLOW__CORE__FERNET_KEY: 1NS-YRTKfELNOLdWfjmLTeyZvRRbMc-aXgPJDtFZnY4=
       AIRFLOW__CORE__DEFAULT_TIMEZONE: Europe/London
     ports:
       - "8081:8080"
@@ -37,7 +37,7 @@ services:
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-      AIRFLOW__CORE__FERNET_KEY: <ADD_YOUR_FERNET_KEY>
+      AIRFLOW__CORE__FERNET_KEY: 1NS-YRTKfELNOLdWfjmLTeyZvRRbMc-aXgPJDtFZnY4=
       AIRFLOW__CORE__DEFAULT_TIMEZONE: Europe/London
     volumes:
       - ./dags:/opt/airflow/dags
